@@ -1,0 +1,47 @@
+<header>
+    {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ path('listeArticles') }}">SYM-Learn</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07"
+                    aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample07">
+                <ul class="navbar-nav mr-auto col-10">
+
+                    <li class="nav-item ">
+                        <a class="nav-link {{ currentPath == path('topic_index') ? 'active' : '' }} "
+                           href="{{ path('topic_index') }}">Topic</a>
+                    </li>
+                    <!--
+                    <li class="nav-item ">
+                        <a class="nav-link {{ currentPath == path('message_index') ? 'active' : '' }} "
+                           href="{{ path('message_index') }}">Messages</a>
+                    </li>
+                    -->
+
+                </ul>
+                <ul class="navbar-nav mr-auto col-2">
+
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <li class="nav-item text-lg-end">
+                            <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item text-lg-end">
+                            <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                        </li>
+                    {% endif %}
+
+
+
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+</header>
+

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}liste messages{% endblock %}
+
+{% block body %}
+
+    <div class="example-wrapper">
+        <ul>
+        {% for message in messages %}
+   <li>{{ message.description }} - <br> {{ message.topic.name }}</li>
+          {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

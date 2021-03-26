@@ -1,0 +1,53 @@
+
+.btn-topic {
+    float: right;
+
+}
+
+.card-body {
+    min-height: 12em;
+}
+
+a.nav-link {
+    font-size: 1.2em;
+}
+
+
+.badge-warning {
+    color: #212529;
+    background-color: #ffc107;
+}
+
+.delete-tag-icon {
+    position: absolute;
+    right: 5px;
+    top: -5px;
+    cursor: pointer;
+}
+
+.delete-tag-icon:hover {
+    color: red;
+    -webkit-transition: color ease-out 0.2s;
+    -moz-transition: color ease-out 0.2s;
+    -o-transition: color ease-out 0.2s;
+    transition: color ease-out 0.2s;
+}
+
+.main-message .card-header {
+    background-color: black !important;
+}
+
+.card.main-message {
+    background-color: #6e6c6c;
+    color: #fff;
+}
+
+.up-message, .down-message {
+    border: none;
+    background-color: transparent;
+    color: black;
+}
+
+.tox.tox-tinymce {
+    margin-bottom: 1em;
+}

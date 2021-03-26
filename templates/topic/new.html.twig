@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ titre }} le Topic{% endblock %}
+
+{% block body %}
+
+    <div class=" ">
+        <div class="row d-flex justify-content-center">
+
+            <div class="col-8 text-center">
+                <h1>Ajouter un Topic</h1>
+            </div>
+
+
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+                {% include '/topic/form.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AppController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+
+
+        <p>
+            le nombre aléatoir est : {{ random }}
+        </p>
+        {# JE SUIS UN COMMENTAIRE pas visible dans l'HTML #}
+
+        {% for i in 0.. random %}
+            {{ i }}
+        {% endfor %}
+
+        <br>
+
+        <ul>
+            {% for nombre in[10,20,30,40,50,60,70,80,90] %}
+                <li>{{ nombre }}</li>
+            {% endfor %}
+        </ul>
+
+        <br>
+
+        <ul>
+            {% for nombreRange in range %}
+                <li>{{ nombreRange }}</li>
+            {% endfor %}
+        </ul>
+
+
+        <img src="{{ asset("assets/images/git.png") }}">
+        <img src="{{ absolute_url(asset("assets/images/git.png")) }}">
+
+
+        {# ACCHICHER UN OBJET #}
+        <hr>
+        <p>AFFICHER UN OBJET</p>
+        <div>
+            <p>{{ message.description }}</p>
+            <p style="text-align: right;"> {{ message.createdAt | date("d/m/Y H:i") }}</p>
+        </div>
+
+
+    </div>
+{% endblock %}

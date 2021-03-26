@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}topic{% endblock %}
+
+{% block body %}
+    <h1>{{ topic.name }}</h1>
+
+
+    <div class="card main-message mb-5 mt-3">
+        <div class="card-header">
+            Nom de l'auteur/Créateur - {{ topic.createdAt | elapsed_time }} - Tags: {% for tag in topic.tags %}
+                <span class="badge badge-warning">{{ tag.text }}</span>
+            {% endfor %}
+        </div>
+        <div class="card-body">
+            {{ topic.description |raw }}
+        </div>
+    </div>
+
+
+
+
+
+
+    <h3 class="mb-3">Messages :</h3>
+    {% for message in messages %}
+        <div class="row">
+            <div class="col-1">
+                <div class="row" style="position: relative; height: 100%;">
+                    <div class="align-self-center" style="text-align: center;position: absolute;     font-size: 2em;">
+                        <a class="up-message" href="{{ path('message_add_point', {'id': message.id }) }}"><i
+                                    class="fas fa-angle-up"></i></a>
+
+                        <br>
+                        <span class="number"> {{ message.score |raw }}</span>
+                        <br>
+                        <a class="down-message" href="{{ path('message_remove_point', {'id': message.id }) }}"><i
+                                    class="fas fa-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-11">
+                <div class="card">
+                    <div class="card-header">
+                        Nom de l'auteur - {{ message.createdAt | elapsed_time }}
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            {{ message.description |raw }}
+                        </blockquote>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-11 offset-1">
+
+
+                {% for comment in message.comments %}
+                    <div class="card mt-2 " style="margin-left: 5em">
+                        <div class="card-header ">
+                            Nom de l'auteur - {{ message.createdAt | elapsed_time }}
+                        </div>
+                        <div class="card-body" style="min-height: auto">
+                            <blockquote class="blockquote mb-0">
+                                {{ comment.desctription | raw }}
+                            </blockquote>
+                        </div>
+
+                    </div>
+
+
+                {% endfor %}
+
+                <div class="card mt-2 mb-5 " style="margin-left: 5em">
+                    <div class="card-body" style="min-height: auto">
+                        {{ render(controller(
+                            'App\\Controller\\TopicAdminController::commentNew'
+                            ,{'message': message})) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+
+
+    {% include '/message/form/topic_message_form.html.twig' %}
+
+
+
+{% endblock %}

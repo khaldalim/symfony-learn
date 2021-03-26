@@ -1,0 +1,66 @@
+{#
+<form method="post">
+    <div class="mb-3">
+        <label for="topicName">Nom du topic</label>
+
+        <input name="topicName" class="form-control" id="topicName">
+    </div>
+    <input type="submit" value="Envoyer" class="btn btn-success">
+</form>
+#}
+
+
+{{ form_start(form) }}
+<div class="mb-3">
+
+    {{ form_row(form.name) }}
+
+{{ form_row(form.description) }}
+    <label>Tags:</label>
+    {{ form_row(form.tags) }}
+
+    {# <div id="list-tags" class="row" data-widget-count="{{ form.tags | length }}"
+         data-prototype="{{ include('topic/prototype/tag.html.twig', {'tag':form.tags.vars.prototype}) | e('html_attr') }}">
+
+        {% for tag in form.tags %}
+            {{ include('topic/prototype/tag.html.twig', {'tag':tag}) }}
+        {% endfor %}
+
+    </div>
+    <button id="btn-add-tag" class="btn btn-warning" type="button">Ajouter un tag</button> #}
+
+    {% for tag in form.tags %}
+    {% endfor %}
+
+</div>
+<div class="mb-3">
+    <input type="submit" class="btn btn-success" value="{{ titre }}">
+</div>
+{{ form_end(form) }}
+
+
+{#
+<script>
+    let btn = document.querySelector('#btn-add-tag');
+    let listTags = document.querySelector('#list-tags');
+    btn.addEventListener('click', function () {
+        let prototype = listTags.dataset.prototype;
+
+        let count = listTags.dataset.widgetCount;
+        prototype = prototype.replace(/__name__/g, count);
+        listTags.dataset.widgetCount = parseInt(count) + 1;
+
+        let element = document.createElement("div");
+        element.innerHTML = prototype;
+
+        listTags.appendChild(element.firstChild);
+
+    });
+
+
+    function deleteTag(btn){
+        console.log(btn);
+        btn.closest('.tag-container').remove();
+    }
+</script>
+ #}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}liste messages{% endblock %}
+
+{% block body %}
+
+    <div class="mb-5">
+        <p>Nulla porttitor accumsan tincidunt. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa,
+            convallis a pellentesque nec, egestas non nisi. Praesent sapien massa, convallis a pellentesque nec, egestas
+            non nisi. Proin eget tortor risus.</p>
+        <p>Nulla porttitor accumsan tincidunt. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa,
+            convallis a pellentesque nec, egestas non nisi. Praesent sapien massa, convallis a pellentesque nec, egestas
+            non nisi. Proin eget tortor risus.</p>
+        <a class="btn btn-success" href="{{ path('topic_new') }}">Ajouter une Topic</a>
+    </div>
+
+    <div class="row">
+<h1>Les topics ayant le tag :{{ tag }}</h1>
+
+        {% for topic in topics |reverse %}
+            <div class="col-md-4 col-lg-3 col-sm-6 mb-3 d-flex align-items-stretch  justify-content-center">
+                <div class="card">
+                    <img class="card-img-top"
+                         src="https://www.mecanismes-dhistoires.fr/wp-content/uploads/2014/11/img-placeholder-dark.jpg"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <span style="font-size: 12px;">{{ topic.createdAt | date('d/m/Y') }}</span>
+                        <h5 class="card-title">{{ topic.name }}</h5>
+                        {{ topic.description | raw }}
+                        <div class="tags mb-3">
+                            {% for tag in topic.tags %}
+                                <span class="badge badge-warning">{{ tag.text }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="btn-topic">
+                            <a href="{{ path('topic_show', {'slug' : topic.slug}) }}" class="btn btn-primary">Voir le
+                                topic</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+{% endblock %}
