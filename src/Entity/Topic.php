@@ -52,6 +52,17 @@ class Topic
      */
     private $description;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="topics")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
 
     public function __construct()
     {
@@ -59,6 +70,21 @@ class Topic
         $this->messages = new ArrayCollection();
         $this->tags = new ArrayCollection();
 
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function  prePersist(){
+        $this->createdAt = new \DateTime();
+    }
+
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function  preUpdate(){
+        $this->updatedAt = new \DateTime();
     }
 
     public function __toString(): string
@@ -172,6 +198,30 @@ class Topic
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

@@ -51,3 +51,23 @@ a.nav-link {
 .tox.tox-tinymce {
     margin-bottom: 1em;
 }
+
+legend.col-form-label.required {
+    display: none;
+}
+
+
+/* Tag img */
+.illustration-tag {
+text-align: center;
+    position:relative
+}
+
+.illustration-img {
+max-height: 20em;
+}
+
+.img-tag img {
+    max-height: 12em;
+    object-fit: contain;
+}

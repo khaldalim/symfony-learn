@@ -59,14 +59,16 @@
                          src="https://www.mecanismes-dhistoires.fr/wp-content/uploads/2014/11/img-placeholder-dark.jpg"
                          alt="Card image cap">
                     <div class="card-body">
-                        <span style="font-size: 12px;">{{ topic.createdAt | date('d/m/Y') }}</span>
+                        <span style="font-size: 12px;">{{ topic.user.name }} - {{ topic.createdAt | date('d/m/Y') }}</span>
                         <h5 class="card-title">{{ topic.name }}</h5>
-                        <strong>Tags :</strong>
                         <div class="tags mb-3">
-                        {% for tag in topic.tags %}
-                            <span class="badge badge-warning">{{ tag.text }}</span>
-                        {% endfor %}
+                            {% for tag in topic.tags %}
+                                <a style="text-decoration: none" href="{{ path('topic_tag', {'slug':tag.slug}) }}"> <span class="badge badge-warning">{{ tag.text }}</span> </a>
+                            {% endfor %}
                         </div>
+                        {{ topic.description | raw }}
+
+
                         <div class="btn-topic">
                             <a href="{{ path('topic_show', {'slug' : topic.slug}) }}" class="btn btn-primary">Voir le
                                 topic</a>

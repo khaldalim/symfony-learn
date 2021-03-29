@@ -30,9 +30,15 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false, referencedColumnName="msg_id")
+     * @ORM\JoinColumn(nullable=false, referencedColumnName="id")
      */
     private $message;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function __construct()
     {
@@ -76,6 +82,18 @@ class Comment
     public function setMessage(?Message $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

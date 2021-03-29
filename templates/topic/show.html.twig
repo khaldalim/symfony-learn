@@ -8,8 +8,8 @@
 
     <div class="card main-message mb-5 mt-3">
         <div class="card-header">
-            Nom de l'auteur/Créateur - {{ topic.createdAt | elapsed_time }} - Tags: {% for tag in topic.tags %}
-                <span class="badge badge-warning">{{ tag.text }}</span>
+           {{ topic.user.name }} - {{ topic.createdAt | elapsed_time }} - Tags: {% for tag in topic.tags %}
+                <a style="text-decoration: none" href="{{ path('topic_tag', {'slug':tag.slug}) }}"> <span class="badge badge-warning">{{ tag.text }}</span> </a>
             {% endfor %}
         </div>
         <div class="card-body">
@@ -42,7 +42,7 @@
             <div class="col-11">
                 <div class="card">
                     <div class="card-header">
-                        Nom de l'auteur - {{ message.createdAt | elapsed_time }}
+                        {{message.user.name}} - {{ message.createdAt | elapsed_time }}
                     </div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
@@ -59,7 +59,7 @@
                 {% for comment in message.comments %}
                     <div class="card mt-2 " style="margin-left: 5em">
                         <div class="card-header ">
-                            Nom de l'auteur - {{ message.createdAt | elapsed_time }}
+                            {{comment.user.name}} - {{ message.createdAt | elapsed_time }}
                         </div>
                         <div class="card-body" style="min-height: auto">
                             <blockquote class="blockquote mb-0">
@@ -72,21 +72,50 @@
 
                 {% endfor %}
 
-                <div class="card mt-2 mb-5 " style="margin-left: 5em">
-                    <div class="card-body" style="min-height: auto">
-                        {{ render(controller(
-                            'App\\Controller\\TopicAdminController::commentNew'
-                            ,{'message': message})) }}
-                    </div>
-                </div>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <div class="mt-2 mb-5 " style="margin-left: 5em">
+                        <div class="card-body comment-form" style="min-height: auto; display: none">
+                            {{ render(controller(
+                                'App\\Controller\\TopicAdminController::commentNew'
+                                ,{'message': message})) }}
+                        </div>
 
+                        <button type="button" class="btn btn-success" onclick="showCommentForm(this)">Ajouter un
+                            commentaire
+                        </button>
+                    </div>
+
+                {% endif %}
             </div>
         </div>
     {% endfor %}
 
 
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+
     {% include '/message/form/topic_message_form.html.twig' %}
+    {% else %}
+    <div class="mt-2 mb-5 " style="margin-left: 5em">
+        Si vous voulez ajouter un message, veuillez vous <a href="{{ path('app_login') }}">connecter
+            !</a>
+    </div>
+    {% endif %}
 
 
+    <script>
 
+
+        function showCommentForm(btn) {
+            let btnForm = btn;
+
+            let form = btnForm.previousElementSibling;
+            btnForm.style.display = "none";
+            form.style.display = "block";
+        }
+
+
+    </script>
 {% endblock %}
+
+

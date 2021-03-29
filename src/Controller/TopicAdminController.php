@@ -6,25 +6,32 @@ use App\Entity\Comment;
 use App\Entity\Message;
 use App\Entity\Tag;
 use App\Entity\Topic;
+use App\Event\TopicEvent;
 use App\Form\CommentType;
 use App\Form\TopicMessageType;
 use App\Form\TopicType;
 
 use App\Service\RandomQuote;
 use App\Service\SlugService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('admin/topic')]
+
+#[Route('/topic')]
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class TopicAdminController extends AbstractController
 {
 
 
-
     #[Route('/new', name: 'topic_new')]
-    public function new(Request $request, SlugService $slugService): Response
+    public function new(Request $request): Response
     {
         $topic = new Topic();
 
@@ -44,12 +51,21 @@ class TopicAdminController extends AbstractController
             if ($form->isValid()) {
 
                 //création du slug
-                $slug = $slugService->slugify($topic->getName());
+                /*
+                 * à été ajouté dans le listener
+                 *    $slug = $slugService->slugify($topic->getName());
                 $topic->setSlug($slug);
+                 */
+
+                $topic->setUser($this->getUser());
+
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($topic);
                 $em->flush();
+
+              // $dispatcher->dispatch(new TopicEvent($topic), TopicEvent::NAME);
+
                 $this->addFlash('success', "Topic crée !");
                 return $this->redirectToRoute('topic_index');
             } else {
@@ -69,6 +85,7 @@ class TopicAdminController extends AbstractController
     public function messageNew(Topic $topic, Request $request): Response
     {
         $message = new Message();
+        $message->setUser($this->getUser());
         $message->setTopic($topic);
         $form = $this->createForm(TopicMessageType::class, $message);
 
@@ -97,6 +114,7 @@ class TopicAdminController extends AbstractController
     public function commentNew(Request $request, Message $message): Response
     {
         $comment = new Comment();
+        $comment->setUser($this->getUser());
         $comment->setMessage($message);
         $form = $this->createForm(CommentType::class, $comment, [
             'action' => $this->generateUrl('topic_comment_new', ['id' => $message->getId()])
@@ -123,6 +141,18 @@ class TopicAdminController extends AbstractController
     #[Route('/update/{id}', name: 'topic_update')]
     public function update(Topic $topic): Response
     {
+
+        /*
+        $user = $this->getUser();
+        if ($user->getId() != $topic->getUser()->getId()) {
+            throw  new AccessDeniedException();
+        }
+        */
+
+        //on passe par le voter pour verifier si l'utilisateur peut editer
+        $this->denyAccessUnlessGranted("TOPIC_EDIT", $topic);
+
+
         /** @var Topic $topic */
         $topic->setName($topic->getName() . "- modifié");
         $em = $this->getDoctrine()->getManager();
@@ -134,7 +164,8 @@ class TopicAdminController extends AbstractController
             $this->addFlash('danger', "Topic non modifié !");
         }
 
-        return $this->redirectToRoute('topic_index');
+
+        return new Response("Topic modifié");
     }
 
     #[Route('/delete/{id}', name: 'topic_delete')]

@@ -16,7 +16,7 @@ class Message
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="msg_id")
+     * @ORM\Column(type="integer")
      */
     private $id;
 
@@ -46,12 +46,17 @@ class Message
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
 
     /**
      * Message constructor.
-     * @param $id
-     * @param $createdAt
-     * @param $description
+     * @param User|null $user
+     * @param null $description
      */
     public function __construct($description = null)
     {
@@ -141,6 +146,18 @@ class Message
                 $comment->setMessage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tags{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+
+
+        {% for tag in tags %}
+            <div class="col-md-4 col-lg-3 col-sm-6 mb-3 d-flex align-items-stretch  justify-content-center">
+
+                <a style="text-decoration: none; width: 100%" href="{{ path('topic_tag', {'slug':tag.slug}) }}">
+                    <div class="card" style="text-align: center">
+                        <div class="img-tag">
+                            {% if tag.illustration %}
+                                <img class="card-img-top "
+                                     src="{{ asset('assets/images/') }}{{ tag.illustration }}" alt="{{ tag.text }}">
+                            {% else %}
+                                <img class="card-img-top"
+                                     src="https://www.mecanismes-dhistoires.fr/wp-content/uploads/2014/11/img-placeholder-dark.jpg"
+                                     alt="Card image cap">
+                            {% endif %}
+                        </div>
+                        <div class="card-body" style="min-height: auto; text-align: center">
+                            <h2>{{ tag.text }}</h2>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+
+
+    </div>
+{% endblock %}

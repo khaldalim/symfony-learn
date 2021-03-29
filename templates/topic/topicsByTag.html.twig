@@ -3,19 +3,16 @@
 {% block title %}liste messages{% endblock %}
 
 {% block body %}
+    <div class="illustration-tag" >
+        <img class="illustration-img" src="{{ asset('assets/images/') }}{{ tag.illustration }}" alt="{{ tag.text }}">
+    </div>
 
     <div class="mb-5">
-        <p>Nulla porttitor accumsan tincidunt. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa,
-            convallis a pellentesque nec, egestas non nisi. Praesent sapien massa, convallis a pellentesque nec, egestas
-            non nisi. Proin eget tortor risus.</p>
-        <p>Nulla porttitor accumsan tincidunt. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa,
-            convallis a pellentesque nec, egestas non nisi. Praesent sapien massa, convallis a pellentesque nec, egestas
-            non nisi. Proin eget tortor risus.</p>
-        <a class="btn btn-success" href="{{ path('topic_new') }}">Ajouter une Topic</a>
+        {{ tag.description |raw }}
     </div>
 
     <div class="row">
-<h1>Les topics ayant le tag :{{ tag }}</h1>
+        <h1>Les topics ayant le tag :{{ tag.text }}</h1>
 
         {% for topic in topics |reverse %}
             <div class="col-md-4 col-lg-3 col-sm-6 mb-3 d-flex align-items-stretch  justify-content-center">

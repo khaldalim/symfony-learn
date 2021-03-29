@@ -35,8 +35,7 @@ class TopicController extends AbstractController
         $topics = $em->getRepository(Topic::class)->findByTag($tag);
         return $this->render('topic/topicsByTag.html.twig', [
             'topics' => $topics,
-            'tag' => $tag->getText()
-
+            'tag' => $tag
         ]);
     }
 
