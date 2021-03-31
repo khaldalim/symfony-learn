@@ -3,8 +3,9 @@
 {% block title %}liste messages{% endblock %}
 
 {% block body %}
+    <a href="{{ path('tag_edit', {'slug': tag.slug}) }}">modifier le tag</a>
     <div class="illustration-tag" >
-        <img class="illustration-img" src="{{ asset('assets/images/') }}{{ tag.illustration }}" alt="{{ tag.text }}">
+        <img class="illustration-img" src="{{ asset('/images/uploads/') }}{{ tag.illustration }}" alt="{{ tag.text }}">
     </div>
 
     <div class="mb-5">
@@ -23,7 +24,7 @@
                     <div class="card-body">
                         <span style="font-size: 12px;">{{ topic.createdAt | date('d/m/Y') }}</span>
                         <h5 class="card-title">{{ topic.name }}</h5>
-                        {{ topic.description | raw }}
+                        {{ topic.description|length > 80 ? topic.description |striptags|slice(0, 80) ~ '...'  : topic.description | raw }}
                         <div class="tags mb-3">
                             {% for tag in topic.tags %}
                                 <span class="badge badge-warning">{{ tag.text }}</span>

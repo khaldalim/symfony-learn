@@ -15,7 +15,7 @@
                         <div class="img-tag">
                             {% if tag.illustration %}
                                 <img class="card-img-top "
-                                     src="{{ asset('images/uploads/') }}{{ tag.illustration }}" alt="{{ tag.text }}">
+                                     src="{{ asset('assets/images/') }}{{ tag.illustration }}" alt="{{ tag.text }}">
                             {% else %}
                                 <img class="card-img-top"
                                      src="https://www.mecanismes-dhistoires.fr/wp-content/uploads/2014/11/img-placeholder-dark.jpg"
@@ -31,6 +31,6 @@
             </div>
         {% endfor %}
 
-        <a href="{{ path('tag_new') }}">Ajouter un tag</a>
+<a href="{{ path('tag_new') }}">Ajouter un tag</a>
     </div>
 {% endblock %}

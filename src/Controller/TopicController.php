@@ -28,16 +28,7 @@ class TopicController extends AbstractController
         return $this->render('topic/index.html.twig', ['topics' => $topics]);
     }
 
-    #[Route('/tag/{slug}', name: 'topic_tag', methods: ['GET'])]
-    public function tag(Tag $tag): Response
-    {
-        $em = $this->getDoctrine()->getManager();
-        $topics = $em->getRepository(Topic::class)->findByTag($tag);
-        return $this->render('topic/topicsByTag.html.twig', [
-            'topics' => $topics,
-            'tag' => $tag
-        ]);
-    }
+
 
     #[Route('/{slug}', name: 'topic_show', methods: ['GET', 'POST'])]
     public function show(Topic $topic, Request $request): Response

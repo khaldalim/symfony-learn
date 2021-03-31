@@ -43,7 +43,7 @@ class Topic
     private $tags;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;
 
@@ -75,7 +75,8 @@ class Topic
     /**
      * @ORM\PrePersist()
      */
-    public function  prePersist(){
+    public function prePersist()
+    {
         $this->createdAt = new \DateTime();
     }
 
@@ -83,7 +84,8 @@ class Topic
     /**
      * @ORM\PreUpdate()
      */
-    public function  preUpdate(){
+    public function preUpdate()
+    {
         $this->updatedAt = new \DateTime();
     }
 
